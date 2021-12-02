@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,7 +15,6 @@ import com.whities.albumresearch.R
 import com.whities.albumresearch.business.domain.models.Track
 import com.whities.albumresearch.business.domain.state.DataState
 import com.whities.albumresearch.business.navigation.AppNavigation
-import com.whities.albumresearch.business.navigation.Screens
 import com.whities.albumresearch.databinding.FragmentAlbumBinding
 import com.whities.albumresearch.framework.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +54,6 @@ class AlbumFragment : Fragment() {
         loadAlbumInfo()
         subscribeObservers()
         subscribeButtonsListeners()
-//        overrideOnBackPressed()
         mainViewModel.album.value?.let { collection ->
             viewModel.getData(collection.collectionId)
         }
@@ -83,6 +80,9 @@ class AlbumFragment : Fragment() {
                 is DataState.Loading -> {
                     displayProgressBar(true)
                     displayError(false)
+                }
+                is DataState.NotFound -> {
+                    displayError(true)
                 }
             }
         })
@@ -122,21 +122,8 @@ class AlbumFragment : Fragment() {
         Glide.with(this).load(artworkUrl).apply(options).into(binding.albumArtwork)
     }
 
-    private fun overrideOnBackPressed() {
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    navigation.navigateTo(Screens.SearchScreen)
-                }
-            }
-        )
-    }
-
     private fun subscribeButtonsListeners() {
         binding.buttonBack.setOnClickListener {
-//            navigation.navigateTo(Screens.SearchScreen)
             requireActivity().supportFragmentManager.popBackStack()
         }
     }

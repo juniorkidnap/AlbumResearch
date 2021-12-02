@@ -3,7 +3,6 @@ package com.whities.albumresearch.framework.presentation.search
 import android.app.Activity
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,20 +57,6 @@ class SearchFragment : Fragment() {
         subscribeObservers()
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainViewModel.userInput.value?.let {
-            binding.userInputLayout.setText(it)
-//            viewModel.getData(it)
-
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mainViewModel.setUserInput(binding.userInputLayout.text.toString())
-    }
-
     private fun initAdapter() {
         listAdapter = SearchListAdapter(context = requireContext()) { album ->
             adapterOnClick(album)
@@ -108,9 +93,6 @@ class SearchFragment : Fragment() {
                     displayError(false)
                     displayNotFound(true)
                 }
-                else -> {
-                    Log.d("", "")
-                }
             }
         })
     }
@@ -123,7 +105,7 @@ class SearchFragment : Fragment() {
                 hideKeyboard(requireActivity())
             }
         }
-        binding.userInputLayout.setOnEditorActionListener { v, actionId, event ->
+        binding.userInputLayout.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     val userInput = binding.userInputLayout.text.toString()
