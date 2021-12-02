@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#175BA0</color>
+    <color name="colorPrimaryVariant">#329579</color>
+    <color name="colorOnPrimary">#0C81A6</color>
+    <color name="colorSecondary">#F1BD68</color>
+    <color name="colorSecondaryVariant">#FF018786</color>
+    <color name="colorOnSecondary">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#AAAAAA</color>
+    <color name="dark_grey">#757474</color>
+    <color name="app_bar">#2B2B2B</color>
+</resources>
