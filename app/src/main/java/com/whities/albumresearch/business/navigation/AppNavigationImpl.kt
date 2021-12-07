@@ -31,16 +31,4 @@ class AppNavigationImpl
             addToBackStack(null)
         }
     }
-
-    private fun closeFragment(fragment: Fragment) {
-        activity.supportFragmentManager.commit {
-            setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out)
-            replace(
-                R.id.fragmentContainerView,
-                fragment
-            )
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
-    }
 }

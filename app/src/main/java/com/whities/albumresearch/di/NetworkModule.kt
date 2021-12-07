@@ -24,7 +24,9 @@ import javax.inject.Singleton
 @Module
 object NetworkModule {
 
-    @Singleton
+    @Provides
+    fun providesApiUrl(): String = API_URL
+
     @Provides
     fun provideGsonBuilder(): Gson {
         return GsonBuilder()
@@ -32,9 +34,8 @@ object NetworkModule {
             .create()
     }
 
-    @Singleton
     @Provides
-    fun providesOkHttpClient() : OkHttpClient {
+    fun providesOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor().also {
             it.level = HttpLoggingInterceptor.Level.BODY
         }
@@ -46,9 +47,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesApiService(gson: Gson, okHttpClient: OkHttpClient): SearchRetrofit {
+    fun providesApiService(apiUrl: String, gson: Gson, okHttpClient: OkHttpClient): SearchRetrofit {
         return Retrofit.Builder()
-            .baseUrl(API_URL)
+            .baseUrl(apiUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

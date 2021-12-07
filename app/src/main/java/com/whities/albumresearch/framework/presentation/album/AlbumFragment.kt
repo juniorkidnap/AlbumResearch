@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -60,8 +61,8 @@ class AlbumFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        listAdapter = AlbumListAdapter().apply {
-            binding.recyclerViewTrackList.adapter = this
+        listAdapter = AlbumListAdapter().also {
+            binding.recyclerViewTrackList.adapter = it
         }
     }
 
@@ -71,18 +72,13 @@ class AlbumFragment : Fragment() {
                 is DataState.Success<List<Track>> -> {
                     displayResult(dataState.data)
                     displayProgressBar(false)
-                    displayError(false)
                 }
                 is DataState.Error -> {
-                    displayError(true)
+                    displayError(dataState.error)
                     displayProgressBar(false)
                 }
                 is DataState.Loading -> {
                     displayProgressBar(true)
-                    displayError(false)
-                }
-                is DataState.NotFound -> {
-                    displayError(true)
                 }
             }
         })
@@ -92,8 +88,8 @@ class AlbumFragment : Fragment() {
         binding.albumProgressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }
 
-    private fun displayError(isDisplayed: Boolean) {
-        binding.textErrorAlbum.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+    private fun displayError(error: String) {
+        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
     }
 
     private fun displayResult(data: List<Track>) {

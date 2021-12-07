@@ -34,8 +34,4 @@ constructor(
             }
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

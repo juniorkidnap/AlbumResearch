@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_margin">20dp</dimen>
+    <dimen name="app_text_layout_width">0dp</dimen>
+    <dimen name="app_text_regular_size">22sp</dimen>
+    <dimen name="app_text_row_size">18sp</dimen>
+    <dimen name="app_text_card_size">12sp</dimen>
+    <dimen name="app_small_text_size">14sp</dimen>
+    <dimen name="app_search_text_size">20sp</dimen>
+    <dimen name="app_big_image_res">230dp</dimen>
+    <dimen name="app_small_image_res">60dp</dimen>
+    <dimen name="app_margin_max">30dp</dimen>
+    <dimen name="app_margin_middle">20dp</dimen>
+    <dimen name="app_margin_min">10dp</dimen>
+    <dimen name="app_padding">10dp</dimen>
+    <dimen name="app_card_padding">8dp</dimen>
+</resources>

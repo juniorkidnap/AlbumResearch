@@ -13,8 +13,8 @@
             android:id="@+id/buttonBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="@dimen/app_margin_min"
+            android:layout_marginTop="@dimen/app_margin_max"
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
             app:background="@android:color/transparent"
             app:backgroundTint="@android:color/transparent"
@@ -24,9 +24,9 @@
 
         <ImageView
             android:id="@+id/albumArtwork"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="@dimen/app_big_image_res"
+            android:layout_height="@dimen/app_big_image_res"
+            android:layout_marginTop="@dimen/app_margin_max"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +42,9 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/albumArtist"
             style="@style/mText"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/app_margin_min"
             android:fontFamily="@font/roboto_bold"
-            android:textSize="14sp"
+            android:textSize="@dimen/app_small_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/albumTitile" />
@@ -52,10 +52,10 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/albumPublishYear"
             style="@style/mText"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/app_margin_middle"
             android:fontFamily="@font/roboto"
             android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textSize="@dimen/app_small_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/albumArtist" />
@@ -64,25 +64,24 @@
             android:id="@+id/recyclerViewTrackList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/app_margin_middle"
             android:isScrollContainer="false"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/albumPublishYear"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/albumInfo"
             style="@style/mText"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="@dimen/app_margin_max"
+            android:layout_marginTop="@dimen/app_margin_middle"
+            android:layout_marginBottom="@dimen/app_margin_max"
             android:fontFamily="@font/roboto"
-            android:textSize="14sp"
+            android:textSize="@dimen/app_small_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -10,6 +10,7 @@ import com.whities.albumresearch.business.interactors.GetAlbum
 import com.whities.albumresearch.framework.datasource.util.MINUTE
 import com.whities.albumresearch.framework.datasource.util.SECOND
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -29,9 +30,9 @@ constructor(
 
     fun getData(collectionId: Int) {
         viewModelScope.launch {
-            getAlbum.execute(collectionId).onEach {
+            getAlbum.execute(collectionId).collect {
                 _dataState.value = it
-            }.launchIn(viewModelScope)
+            }
         }
     }
 
@@ -42,6 +43,4 @@ constructor(
         }
         return "${data.size + 1} tracks · ${duration.div(MINUTE)} minutes ${duration.mod(MINUTE) / SECOND} seconds"
     }
-
-
 }

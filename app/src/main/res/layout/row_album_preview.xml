@@ -8,12 +8,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
+        android:padding="@dimen/app_padding">
 
         <ImageView
             android:id="@+id/albumCoverPreview"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/app_small_image_res"
+            android:layout_height="@dimen/app_small_image_res"
             android:src="@drawable/zero_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,6 @@
             android:text="@string/example_album_title_preview"
             app:layout_constraintBottom_toTopOf="@+id/albumArtistPreview"
             app:layout_constraintEnd_toStartOf="@+id/arrowRight"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/albumCoverPreview"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,10 +33,9 @@
             style="@style/rowAlbumText"
             android:text="@string/example_artist_preview"
             android:textColor="@color/grey"
-            android:textSize="12sp"
+            android:textSize="@dimen/app_text_card_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/arrowRight"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/albumCoverPreview"
             app:layout_constraintTop_toBottomOf="@+id/albumTitlePreview" />
 

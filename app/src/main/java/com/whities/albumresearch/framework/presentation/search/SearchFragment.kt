@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -60,8 +61,9 @@ class SearchFragment : Fragment() {
     private fun initAdapter() {
         listAdapter = SearchListAdapter(context = requireContext()) { album ->
             adapterOnClick(album)
+        }.also {
+            binding.searchRecyclerView.adapter = it
         }
-        binding.searchRecyclerView.adapter = listAdapter
     }
 
     private fun adapterOnClick(album: Album) {
@@ -75,45 +77,43 @@ class SearchFragment : Fragment() {
                 is DataState.Success<List<Album>> -> {
                     displayResult(dataState.data)
                     displayProgressBar(false)
-                    displayError(false)
-                    displayNotFound(false)
                 }
                 is DataState.Error -> {
-                    displayError(true)
+                    displayError(dataState.error)
                     displayProgressBar(false)
-                    displayNotFound(false)
                 }
                 is DataState.Loading -> {
                     displayProgressBar(true)
-                    displayError(false)
-                    displayNotFound(false)
-                }
-                is DataState.NotFound -> {
-                    displayProgressBar(false)
-                    displayError(false)
-                    displayNotFound(true)
                 }
             }
         })
     }
 
     private fun subscribeButtonsListener() {
+        onEndIconClickListener()
+        onKeyboardButtonClickListener()
+    }
+
+    private fun onKeyboardButtonClickListener() {
         binding.apply {
-            textLayout.setEndIconOnClickListener {
-                val userInput = userInputLayout.text.toString()
-                viewModel.getData(userInput)
-                hideKeyboard(requireActivity())
+            userInputLayout.setOnEditorActionListener { _, actionId, _ ->
+                return@setOnEditorActionListener when (actionId) {
+                    EditorInfo.IME_ACTION_SEARCH -> {
+                        viewModel.getData(userInputLayout.text.toString())
+                        hideKeyboard()
+                        true
+                    }
+                    else -> false
+                }
             }
         }
-        binding.userInputLayout.setOnEditorActionListener { _, actionId, _ ->
-            return@setOnEditorActionListener when (actionId) {
-                EditorInfo.IME_ACTION_SEARCH -> {
-                    val userInput = binding.userInputLayout.text.toString()
-                    viewModel.getData(userInput)
-                    hideKeyboard(requireActivity())
-                    true
-                }
-                else -> false
+    }
+
+    private fun onEndIconClickListener() {
+        binding.apply {
+            textLayout.setEndIconOnClickListener {
+                viewModel.getData(userInputLayout.text.toString())
+                hideKeyboard()
             }
         }
     }
@@ -122,26 +122,21 @@ class SearchFragment : Fragment() {
         binding.searchProgressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }
 
-    private fun displayError(isDisplayed: Boolean) {
-        binding.textErrorSearch.visibility = if (isDisplayed) View.VISIBLE else View.GONE
-    }
-
-    private fun displayNotFound(isDisplayed: Boolean) {
-        binding.textNotFound.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+    private fun displayError(error: String) {
+        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
     }
 
     private fun displayResult(data: List<Album>) {
         listAdapter.submitList(data)
     }
 
-    private fun hideKeyboard(activity: Activity) {
+    private fun hideKeyboard() {
         val imm: InputMethodManager =
-            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        var view = activity.currentFocus
+            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = requireActivity().currentFocus
         if (view == null) {
-            view = View(activity)
+            view = View(requireActivity())
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
 }
