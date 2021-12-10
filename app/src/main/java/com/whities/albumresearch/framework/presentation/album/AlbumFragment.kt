@@ -2,6 +2,7 @@ package com.whities.albumresearch.framework.presentation.album
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -17,6 +19,8 @@ import com.whities.albumresearch.business.domain.models.Track
 import com.whities.albumresearch.business.domain.state.DataState
 import com.whities.albumresearch.business.navigation.AppNavigation
 import com.whities.albumresearch.databinding.FragmentAlbumBinding
+import com.whities.albumresearch.framework.datasource.util.ALBUM_KEY
+import com.whities.albumresearch.framework.datasource.util.ALBUM_RESULT
 import com.whities.albumresearch.framework.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,16 +34,6 @@ class AlbumFragment : Fragment() {
     private lateinit var binding: FragmentAlbumBinding
     private lateinit var listAdapter: AlbumListAdapter
     private val viewModel by viewModels<AlbumViewModel>()
-    private val mainViewModel by activityViewModels<MainViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val inflater = TransitionInflater.from(requireContext())
-        enterTransition = inflater.inflateTransition(R.transition.slide_right)
-            .setInterpolator(LinearInterpolator())
-        exitTransition = inflater.inflateTransition(R.transition.slide_left)
-            .setInterpolator(LinearInterpolator())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,11 +46,14 @@ class AlbumFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        loadAlbumInfo()
         subscribeObservers()
         subscribeButtonsListeners()
-        mainViewModel.album.value?.let { collection ->
-            viewModel.getData(collection.collectionId)
+        subscribeFragmentResultListener()
+    }
+
+    private fun subscribeFragmentResultListener() {
+        setFragmentResultListener(ALBUM_RESULT) { _, result ->
+            viewModel.getData(result.getLong(ALBUM_KEY))
         }
     }
 
@@ -80,6 +77,7 @@ class AlbumFragment : Fragment() {
                 is DataState.Loading -> {
                     displayProgressBar(true)
                 }
+                else -> {}
             }
         })
     }
@@ -92,25 +90,24 @@ class AlbumFragment : Fragment() {
         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun displayResult(data: List<Track>) {
-        listAdapter.submitList(data)
-        binding.albumInfo.text = viewModel.calculateDuration(data)
-    }
-
-    private fun loadAlbumInfo() {
-        mainViewModel.album.value?.apply {
+    private fun displayResult(data: List<Track>?) {
+        data?.get(0)?.apply {
             setAlbumArtwork(artworkUrl100)
             binding.apply {
                 albumTitile.text = collectionName
                 val artistNameText = "by $artistName"
                 albumArtist.text = artistNameText
-                val publishYearText = "$collectionType • $releaseDate"
+                val publishYearText = "Album • $releaseDate"
                 albumPublishYear.text = publishYearText
             }
         }
+        data?.let {
+            listAdapter.submitList(it)
+            binding.albumInfo.text = viewModel.calculateDuration(it)
+        }
     }
 
-    private fun setAlbumArtwork(artworkUrl: String) {
+    private fun setAlbumArtwork(artworkUrl: String?) {
         val options: RequestOptions = RequestOptions()
             .centerCrop()
             .placeholder(R.mipmap.ic_launcher_round)

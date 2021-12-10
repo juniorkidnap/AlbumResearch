@@ -41,7 +41,7 @@ class SearchListAdapter(
             }
         }
 
-        private fun loadImage(imageView: ImageView, url: String) {
+        private fun loadImage(imageView: ImageView, url: String?) {
 
             val options: RequestOptions = RequestOptions()
                 .centerCrop()

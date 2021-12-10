@@ -7,7 +7,7 @@ data class SearchResultNetworkEntity(
 
     @SerializedName("resultCount")
     @Expose
-    val resultCount: Int = 0,
+    val resultCount: Int? = null,
 
     @SerializedName("results")
     @Expose
@@ -18,54 +18,53 @@ data class AnswerNetworkEntity(
 
     @SerializedName("artistId")
     @Expose
-    val artistId: Int = 0,
+    val artistId: Long? = null,
 
     @SerializedName("artistName")
     @Expose
-    val artistName: String = "",
+    val artistName: String? = null,
 
     @SerializedName("collectionId")
     @Expose
-    val collectionId: Int = 0,
+    val collectionId: Long? = null,
 
     @SerializedName("collectionName")
     @Expose
-    val collectionName: String = "",
+    val collectionName: String? = null,
 
     @SerializedName("collectionType")
     @Expose
-    val collectionType: String = "",
+    val collectionType: String? = null,
 
     @SerializedName("artworkUrl100")
     @Expose
-    val artworkUrl100: String = "",
+    val artworkUrl100: String? = null,
 
     @SerializedName("collectionCensoredName")
     @Expose
-    val collectionCensoredName: String = "",
+    val collectionCensoredName: String? = null,
 
     @SerializedName("collectionExplicitness")
     @Expose
-    val collectionExplicitness: String = "",
+    val collectionExplicitness: String? = null,
 
     @SerializedName("copyright")
     @Expose
-    val copyright: String = "",
+    val copyright: String? = null,
 
     @SerializedName("primaryGenreName")
     @Expose
-    val primaryGenreName: String = "",
+    val primaryGenreName: String? = null,
 
     @SerializedName("releaseDate")
     @Expose
-    val releaseDate: String = "",
+    val releaseDate: String? = null,
 
     @SerializedName("trackCount")
     @Expose
-    val trackCount: Int = 0,
+    val trackCount: Int? = null,
 
     @SerializedName("wrapperType")
     @Expose
-    val wrapperType: String = ""
-
+    val wrapperType: String? = null
 )

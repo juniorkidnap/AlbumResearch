@@ -22,7 +22,12 @@ class AppNavigationImpl
 
     private fun openFragment(fragment: Fragment) {
         activity.supportFragmentManager.commit {
-            setCustomAnimations(R.anim.slide_in, R.anim.slide_out_left)
+            setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out
+            )
             replace(
                 R.id.fragmentContainerView,
                 fragment

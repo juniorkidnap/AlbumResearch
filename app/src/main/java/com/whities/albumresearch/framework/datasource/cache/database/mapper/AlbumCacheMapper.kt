@@ -1,53 +1,55 @@
-package com.whities.albumresearch.framework.datasource.network.mappers
+package com.whities.albumresearch.framework.datasource.cache.database.mapper
 
-import android.util.Log
 import com.whities.albumresearch.business.domain.models.Album
 import com.whities.albumresearch.business.domain.util.EntityMapper
-import com.whities.albumresearch.framework.datasource.network.model.AnswerNetworkEntity
+import com.whities.albumresearch.framework.datasource.cache.database.model.AlbumCacheEntity
 import javax.inject.Inject
 
-class SearchResultNetworkMapper
+class AlbumCacheMapper
 @Inject
-constructor() : EntityMapper<AnswerNetworkEntity, Album> {
+constructor() : EntityMapper<AlbumCacheEntity, Album> {
 
-    override fun mapFromEntity(entity: AnswerNetworkEntity): Album {
-
+    override fun mapFromEntity(entity: AlbumCacheEntity): Album {
         return Album(
-            collectionId = entity.collectionId,
             artistId = entity.artistId,
             artistName = entity.artistName,
+            collectionId = entity.collectionId,
             collectionName = entity.collectionName,
-            collectionType = entity.collectionType,
             artworkUrl100 = entity.artworkUrl100,
             collectionCensoredName = entity.collectionCensoredName,
             collectionExplicitness = entity.collectionExplicitness,
+            collectionType = entity.collectionType,
             copyright = entity.copyright,
             primaryGenreName = entity.primaryGenreName,
-            releaseDate = entity.releaseDate?.substringBefore("-"),
+            releaseDate = entity.releaseDate,
             trackCount = entity.trackCount,
-            wrapperType = entity.wrapperType,
+            wrapperType = entity.wrapperType
         )
     }
 
-    override fun mapToEntity(domainModel: Album): AnswerNetworkEntity {
-        return AnswerNetworkEntity(
-            collectionId = domainModel.collectionId,
+    override fun mapToEntity(domainModel: Album): AlbumCacheEntity {
+        return AlbumCacheEntity(
             artistId = domainModel.artistId,
             artistName = domainModel.artistName,
+            collectionId = domainModel.collectionId,
             collectionName = domainModel.collectionName,
-            collectionType = domainModel.collectionType,
             artworkUrl100 = domainModel.artworkUrl100,
             collectionCensoredName = domainModel.collectionCensoredName,
             collectionExplicitness = domainModel.collectionExplicitness,
+            collectionType = domainModel.collectionType,
             copyright = domainModel.copyright,
             primaryGenreName = domainModel.primaryGenreName,
             releaseDate = domainModel.releaseDate,
             trackCount = domainModel.trackCount,
-            wrapperType = domainModel.wrapperType,
+            wrapperType = domainModel.wrapperType
         )
     }
 
-    fun mapFromEntityList(entities: List<AnswerNetworkEntity>): List<Album> {
+    fun mapFromEntityList(entities: List<AlbumCacheEntity>): List<Album> {
         return entities.map { mapFromEntity(it) }
+    }
+
+    fun mapToEntityList(domainModels: List<Album>): List<AlbumCacheEntity> {
+        return domainModels.map { mapToEntity(it) }
     }
 }

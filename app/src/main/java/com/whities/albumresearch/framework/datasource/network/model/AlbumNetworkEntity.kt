@@ -7,7 +7,7 @@ data class AlbumNetworkEntity(
 
     @SerializedName("resultCount")
     @Expose
-    val resultCount: Int = 0,
+    val resultCount: Int? = null,
 
     @SerializedName("results")
     @Expose
@@ -16,87 +16,87 @@ data class AlbumNetworkEntity(
 
 data class TrackNetworkEntity(
 
-    @SerializedName("")
+    @SerializedName("artistId")
     @Expose
-    val artistId: Int = 0,
+    val artistId: Long? = null,
 
     @SerializedName("artistName")
     @Expose
-    val artistName: String = "",
+    val artistName: String? = null,
 
     @SerializedName("collectionId")
     @Expose
-    val collectionId: Int = 0,
+    val collectionId: Long? = null,
 
     @SerializedName("collectionName")
     @Expose
-    val collectionName: String = "",
+    val collectionName: String? = null,
 
     @SerializedName("collectionType")
     @Expose
-    val collectionType: String = "",
+    val collectionType: String? = null,
 
     @SerializedName("artworkUrl100")
     @Expose
-    val artworkUrl100: String = "",
+    val artworkUrl100: String? = null,
 
     @SerializedName("collectionCensoredName")
     @Expose
-    val collectionCensoredName: String = "",
+    val collectionCensoredName: String? = null,
 
     @SerializedName("collectionExplicitness")
     @Expose
-    val collectionExplicitness: String = "",
+    val collectionExplicitness: String? = null,
 
     @SerializedName("copyright")
     @Expose
-    val copyright: String = "",
+    val copyright: String? = null,
 
     @SerializedName("country")
     @Expose
-    val country: String = "",
+    val country: String? = null,
 
     @SerializedName("kind")
     @Expose
-    val kind: String = "",
+    val kind: String? = null,
 
     @SerializedName("primaryGenreName")
     @Expose
-    val primaryGenreName: String = "",
+    val primaryGenreName: String? = null,
 
     @SerializedName("releaseDate")
     @Expose
-    val releaseDate: String = "",
+    val releaseDate: String? = null,
 
     @SerializedName("trackCensoredName")
     @Expose
-    val trackCensoredName: String = "",
+    val trackCensoredName: String? = null,
 
     @SerializedName("trackCount")
     @Expose
-    val trackCount: Int = 0,
+    val trackCount: Int? = null,
 
     @SerializedName("trackExplicitness")
     @Expose
-    val trackExplicitness: String = "",
+    val trackExplicitness: String? = null,
 
     @SerializedName("trackId")
     @Expose
-    val trackId: Int = 0,
+    val trackId: Long? = null,
 
     @SerializedName("trackName")
     @Expose
-    val trackName: String = "",
+    val trackName: String? = null,
 
     @SerializedName("trackNumber")
     @Expose
-    val trackNumber: Int = 0,
+    val trackNumber: Int? = null,
 
     @SerializedName("trackTimeMillis")
     @Expose
-    val trackTimeMillis: Int = 0,
+    val trackTimeMillis: Long? = null,
 
     @SerializedName("wrapperType")
     @Expose
-    val wrapperType: String = ""
+    val wrapperType: String? = null
 )

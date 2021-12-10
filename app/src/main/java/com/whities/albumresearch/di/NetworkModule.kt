@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.whities.albumresearch.business.data.network.NetworkDataSource
 import com.whities.albumresearch.business.data.network.NetworkDataSourceImpl
-import com.whities.albumresearch.framework.datasource.network.SearchRetrofitService
-import com.whities.albumresearch.framework.datasource.network.SearchRetrofitServiceImpl
+import com.whities.albumresearch.framework.datasource.network.service.SearchRetrofitService
+import com.whities.albumresearch.framework.datasource.network.service.SearchRetrofitServiceImpl
 import com.whities.albumresearch.framework.datasource.network.mappers.AlbumNetworkMapper
 import com.whities.albumresearch.framework.datasource.network.mappers.SearchResultNetworkMapper
 import com.whities.albumresearch.framework.datasource.network.retrofit.SearchRetrofit

@@ -7,5 +7,5 @@ interface NetworkDataSource {
 
     suspend fun getSearchResults(userInput: String) : List<Album>
 
-    suspend fun getAlbum(albumId: Int) : List<Track>
+    suspend fun getAlbum(albumId: Long?) : List<Track>
 }

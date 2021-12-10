@@ -1,6 +1,7 @@
 package com.whities.albumresearch.di
 
 import android.content.Context
+import com.whities.albumresearch.business.data.cache.CacheDataSource
 import com.whities.albumresearch.business.data.network.NetworkDataSource
 import com.whities.albumresearch.business.interactors.GetAlbum
 import com.whities.albumresearch.business.interactors.GetSearchResult
@@ -19,11 +20,13 @@ object InteractorsModule {
     @Provides
     fun provideGetSearchResult(
         @ApplicationContext appContext: Context,
-        networkDataSource: NetworkDataSource
+        networkDataSource: NetworkDataSource,
+        cacheDataSource: CacheDataSource
     ): GetSearchResult {
         return GetSearchResult(
             appContext,
-            networkDataSource
+            networkDataSource,
+            cacheDataSource
         )
     }
 
@@ -31,11 +34,13 @@ object InteractorsModule {
     @Provides
     fun providesGetAlbum(
         @ApplicationContext appContext: Context,
-        networkDataSource: NetworkDataSource
+        networkDataSource: NetworkDataSource,
+        cacheDataSource: CacheDataSource
     ): GetAlbum {
         return GetAlbum(
             appContext,
-            networkDataSource
+            networkDataSource,
+            cacheDataSource
         )
     }
 }

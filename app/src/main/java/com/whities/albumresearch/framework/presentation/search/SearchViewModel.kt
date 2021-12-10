@@ -9,9 +9,7 @@ import com.whities.albumresearch.business.domain.models.Album
 import com.whities.albumresearch.business.domain.state.DataState
 import com.whities.albumresearch.business.interactors.GetSearchResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,9 +20,8 @@ constructor(
     private val getSearchResult: GetSearchResult
 ) : ViewModel() {
 
-    private val _dataState: MutableLiveData<DataState<List<Album>>> = MutableLiveData()
-
-    val dataState: LiveData<DataState<List<Album>>>
+    private val _dataState: MutableStateFlow<DataState<List<Album>>> = MutableStateFlow(DataState.Empty)
+    val dataState: StateFlow<DataState<List<Album>>>
         get() = _dataState
 
     fun getData(userInput: String) {

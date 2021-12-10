@@ -28,7 +28,7 @@ constructor(
     val dataState: LiveData<DataState<List<Track>>>
         get() = _dataState
 
-    fun getData(collectionId: Int) {
+    fun getData(collectionId: Long?) {
         viewModelScope.launch {
             getAlbum.execute(collectionId).collect {
                 _dataState.value = it
@@ -37,10 +37,12 @@ constructor(
     }
 
     fun calculateDuration(data: List<Track>): String {
-        var duration = 0
+        var duration = 0L
         for (track in data) {
-            duration += track.trackTimeMillis
+            track.trackTimeMillis?.let {
+                duration += it
+            }
         }
-        return "${data.size + 1} tracks · ${duration.div(MINUTE)} minutes ${duration.mod(MINUTE) / SECOND} seconds"
+        return "${data.size} tracks · ${duration.div(MINUTE)} minutes ${duration.mod(MINUTE) / SECOND} seconds"
     }
 }

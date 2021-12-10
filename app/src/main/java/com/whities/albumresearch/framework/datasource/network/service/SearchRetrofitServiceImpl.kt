@@ -1,4 +1,4 @@
-package com.whities.albumresearch.framework.datasource.network
+package com.whities.albumresearch.framework.datasource.network.service
 
 import com.whities.albumresearch.framework.datasource.network.model.AlbumNetworkEntity
 import com.whities.albumresearch.framework.datasource.network.model.SearchResultNetworkEntity
@@ -20,7 +20,7 @@ constructor(
         )
     }
 
-    override suspend fun getAlbum(albumId: Int): AlbumNetworkEntity {
+    override suspend fun getAlbum(albumId: Long?): AlbumNetworkEntity {
         return searchRetrofit.getAlbum(
             id = albumId.toString(),
             entity = SONG_ENTITY

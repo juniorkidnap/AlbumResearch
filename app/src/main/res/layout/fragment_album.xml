@@ -20,7 +20,8 @@
             app:backgroundTint="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/dark_grey" />
+            app:tint="@color/dark_grey"
+            android:contentDescription="@string/description_button_back" />
 
         <ImageView
             android:id="@+id/albumArtwork"
@@ -29,7 +30,8 @@
             android:layout_marginTop="@dimen/app_margin_max"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/description_album_cover"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/albumTitile"

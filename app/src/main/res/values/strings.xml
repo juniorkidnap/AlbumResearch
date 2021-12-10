@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Album Research</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="example_album_title_preview">Zero Time</string>
     <string name="example_artist_preview">Album by Tonto\'s Expanding Head Band</string>
     <string name="example_artist">by Tonto\'s Expanding Head Band</string>
@@ -11,4 +9,6 @@
     <string name="example_album_info">6 tracks · 33 minutes 48 seconds</string>
     <string name="text_error">Troubles with internet connection.\nTry again later.</string>
     <string name="text_not_found">Can\'t find anything for this query.</string>
+    <string name="description_button_back">Button back</string>
+    <string name="description_album_cover">Album image preview</string>
 </resources>

@@ -1,15 +1,16 @@
-package com.whities.albumresearch.framework.datasource.network.mappers
+package com.whities.albumresearch.framework.datasource.cache.database.mapper
 
+import android.util.Log
 import com.whities.albumresearch.business.domain.models.Track
 import com.whities.albumresearch.business.domain.util.EntityMapper
-import com.whities.albumresearch.framework.datasource.network.model.TrackNetworkEntity
+import com.whities.albumresearch.framework.datasource.cache.database.model.TrackCacheEntity
 import javax.inject.Inject
 
-class AlbumNetworkMapper
+class TrackCacheMapper
 @Inject
-constructor() : EntityMapper<TrackNetworkEntity, Track> {
+constructor() : EntityMapper<TrackCacheEntity, Track> {
 
-    override fun mapFromEntity(entity: TrackNetworkEntity): Track {
+    override fun mapFromEntity(entity: TrackCacheEntity): Track {
         return Track(
             artistId = entity.artistId,
             artistName = entity.artistName,
@@ -23,7 +24,7 @@ constructor() : EntityMapper<TrackNetworkEntity, Track> {
             country = entity.country,
             kind = entity.kind,
             primaryGenreName = entity.primaryGenreName,
-            releaseDate = entity.releaseDate?.substringBefore("-"),
+            releaseDate = entity.releaseDate,
             trackCensoredName = entity.trackCensoredName,
             trackCount = entity.trackCount,
             trackExplicitness = entity.trackExplicitness,
@@ -35,8 +36,10 @@ constructor() : EntityMapper<TrackNetworkEntity, Track> {
         )
     }
 
-    override fun mapToEntity(domainModel: Track): TrackNetworkEntity {
-        return TrackNetworkEntity(
+    override fun mapToEntity(domainModel: Track): TrackCacheEntity {
+//        Log.d("mylog", "map to entity\ncollectionType: ${domainModel.collectionType}\n" +
+//                "artistId: ${domainModel.artistId}")
+        return TrackCacheEntity(
             artistId = domainModel.artistId,
             artistName = domainModel.artistName,
             collectionId = domainModel.collectionId,
@@ -61,7 +64,11 @@ constructor() : EntityMapper<TrackNetworkEntity, Track> {
         )
     }
 
-    fun mapFromEntityList(entities: List<TrackNetworkEntity>): List<Track> {
+    fun mapFromEntityList(entities: List<TrackCacheEntity>): List<Track> {
         return entities.map { mapFromEntity(it) }
+    }
+
+    fun mapToEntityList(domainModels: List<Track>): List<TrackCacheEntity> {
+        return domainModels.map { mapToEntity(it) }
     }
 }
