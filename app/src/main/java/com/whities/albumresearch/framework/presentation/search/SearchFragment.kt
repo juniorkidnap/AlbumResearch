@@ -2,7 +2,6 @@ package com.whities.albumresearch.framework.presentation.search
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,27 +96,23 @@ class SearchFragment : Fragment() {
         onKeyboardButtonClickListener()
     }
 
-    private fun onKeyboardButtonClickListener() {
-        binding.apply {
-            userInputLayout.setOnEditorActionListener { _, actionId, _ ->
-                return@setOnEditorActionListener when (actionId) {
-                    EditorInfo.IME_ACTION_SEARCH -> {
-                        viewModel.getData(userInputLayout.text.toString())
-                        hideKeyboard()
-                        true
-                    }
-                    else -> false
+    private fun onKeyboardButtonClickListener() = with(binding) {
+        userInputLayout.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    viewModel.getData(userInputLayout.text.toString())
+                    hideKeyboard()
+                    true
                 }
+                else -> false
             }
         }
     }
 
-    private fun onEndIconClickListener() {
-        binding.apply {
-            textLayout.setEndIconOnClickListener {
-                viewModel.getData(userInputLayout.text.toString())
-                hideKeyboard()
-            }
+    private fun onEndIconClickListener() = with(binding) {
+        textLayout.setEndIconOnClickListener {
+            viewModel.getData(userInputLayout.text.toString())
+            hideKeyboard()
         }
     }
 

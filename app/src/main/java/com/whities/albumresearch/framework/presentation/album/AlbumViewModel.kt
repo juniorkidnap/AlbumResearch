@@ -10,9 +10,7 @@ import com.whities.albumresearch.business.interactors.GetAlbum
 import com.whities.albumresearch.framework.datasource.util.MINUTE
 import com.whities.albumresearch.framework.datasource.util.SECOND
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,9 +21,9 @@ constructor(
     private val getAlbum: GetAlbum
 ) : ViewModel() {
 
-    private val _dataState: MutableLiveData<DataState<List<Track>>> = MutableLiveData()
+    private val _dataState: MutableStateFlow<DataState<List<Track>>> = MutableStateFlow(DataState.Empty)
 
-    val dataState: LiveData<DataState<List<Track>>>
+    val dataState: StateFlow<DataState<List<Track>>>
         get() = _dataState
 
     fun getData(collectionId: Long?) {

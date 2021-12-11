@@ -1,17 +1,16 @@
 package com.whities.albumresearch.framework.presentation.album
 
 import android.os.Bundle
-import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.whities.albumresearch.R
@@ -21,8 +20,9 @@ import com.whities.albumresearch.business.navigation.AppNavigation
 import com.whities.albumresearch.databinding.FragmentAlbumBinding
 import com.whities.albumresearch.framework.datasource.util.ALBUM_KEY
 import com.whities.albumresearch.framework.datasource.util.ALBUM_RESULT
-import com.whities.albumresearch.framework.presentation.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -64,22 +64,26 @@ class AlbumFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        viewModel.dataState.observe(this, { dataState ->
-            when (dataState) {
-                is DataState.Success<List<Track>> -> {
-                    displayResult(dataState.data)
-                    displayProgressBar(false)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.dataState.collect { dataState ->
+                    when (dataState) {
+                        is DataState.Success<List<Track>> -> {
+                            displayResult(dataState.data)
+                            displayProgressBar(false)
+                        }
+                        is DataState.Error -> {
+                            displayError(dataState.error)
+                            displayProgressBar(false)
+                        }
+                        is DataState.Loading -> {
+                            displayProgressBar(true)
+                        }
+                        else -> {}
+                    }
                 }
-                is DataState.Error -> {
-                    displayError(dataState.error)
-                    displayProgressBar(false)
-                }
-                is DataState.Loading -> {
-                    displayProgressBar(true)
-                }
-                else -> {}
             }
-        })
+        }
     }
 
     private fun displayProgressBar(isDisplayed: Boolean) {
@@ -90,20 +94,18 @@ class AlbumFragment : Fragment() {
         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun displayResult(data: List<Track>?) {
+    private fun displayResult(data: List<Track>?) = with(binding) {
         data?.get(0)?.apply {
             setAlbumArtwork(artworkUrl100)
-            binding.apply {
-                albumTitile.text = collectionName
-                val artistNameText = "by $artistName"
-                albumArtist.text = artistNameText
-                val publishYearText = "Album • $releaseDate"
-                albumPublishYear.text = publishYearText
-            }
+            albumTitile.text = collectionName
+            val artistNameText = "by $artistName"
+            albumArtist.text = artistNameText
+            val publishYearText = "Album • $releaseDate"
+            albumPublishYear.text = publishYearText
         }
         data?.let {
             listAdapter.submitList(it)
-            binding.albumInfo.text = viewModel.calculateDuration(it)
+            albumInfo.text = viewModel.calculateDuration(it)
         }
     }
 
@@ -115,8 +117,8 @@ class AlbumFragment : Fragment() {
         Glide.with(this).load(artworkUrl).apply(options).into(binding.albumArtwork)
     }
 
-    private fun subscribeButtonsListeners() {
-        binding.buttonBack.setOnClickListener {
+    private fun subscribeButtonsListeners() = with(binding) {
+        buttonBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
